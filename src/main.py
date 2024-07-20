@@ -1,7 +1,8 @@
 from telegram import Update
+from dotenv import load_dotenv
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 import photos, random
-
+import os
 def randomNumber(listPhotos: photos.fotos):
     max = len(listPhotos)-1
     min = 0
@@ -27,7 +28,9 @@ async def anto(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text ="Te Quiero <3")
 
 def main():
-    application = ApplicationBuilder().token('7202954622:AAFeJvLTM8UBSsbblPpJWYOB8ZTsST7kyA8').build()
+    load_dotenv()
+    token = os.getenv('TELEGRAM-TOKEN')
+    application = ApplicationBuilder().token(token).build()
     start_comand = CommandHandler('start', start)
     anto_comand = CommandHandler('Anto', anto)
     application.add_handler(start_comand)
